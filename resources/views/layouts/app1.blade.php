@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'RSHP - Rumah Sakit Hewan Pendidikan')</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" href="{{ asset('aset/css/Style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/Style.css') }}">
     <style>
         /* Reset & Base */
         *{margin:0;padding:0;box-sizing:border-box}
@@ -112,9 +112,9 @@
 
         <header class="header-section">
             <div class="logo-container">
-                <img src="{{ asset('aset/img/LogoRSHP.png') }}" alt="Logo RSHP" class="logo-img">
+                <img src="{{ asset('assets/img/LogoRSHP.png') }}" alt="Logo RSHP" class="logo-img">
                 <h1 class="logo-content">RUMAH SAKIT HEWAN<br>UNIVERSITAS AIRLANGGA</h1>
-                <img src="{{ asset('aset/img/Logouner.png') }}" alt="Logo UNAIR" class="logo-img">
+                <img src="{{ asset('assets/img/Logouner.png') }}" alt="Logo UNAIR" class="logo-img">
             </div>
             <div class="container-2">
   

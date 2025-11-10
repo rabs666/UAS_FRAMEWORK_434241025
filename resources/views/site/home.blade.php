@@ -109,21 +109,21 @@
 
         <div class="container-content-berita-1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:1.5rem">
             <article class="news-item" style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
-                <img src="{{ asset('aset/img/berita1.png') }}" alt="Berita 1" class="img-content-berita" style="width:100%;height:200px;object-fit:cover;display:block">
+                <img src="{{ asset('assets/img/berita1.png') }}" alt="Berita 1" class="img-content-berita" style="width:100%;height:200px;object-fit:cover;display:block">
                 <div style="padding:1rem">
                     <h4 style="font-size:1rem;color:#1f2937;margin-bottom:0.5rem">Berita RSHP 1</h4>
                     <p style="font-size:0.875rem;color:#6b7280">Informasi terbaru seputar layanan RSHP</p>
                 </div>
             </article>
             <article class="news-item" style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
-                <img src="{{ asset('aset/img/berita2.png') }}" alt="Berita 2" class="img-content-berita" style="width:100%;height:200px;object-fit:cover;display:block">
+                <img src="{{ asset('assets/img/berita2.png') }}" alt="Berita 2" class="img-content-berita" style="width:100%;height:200px;object-fit:cover;display:block">
                 <div style="padding:1rem">
                     <h4 style="font-size:1rem;color:#1f2937;margin-bottom:0.5rem">Berita RSHP 2</h4>
                     <p style="font-size:0.875rem;color:#6b7280">Update kegiatan dan program RSHP</p>
                 </div>
             </article>
             <article class="news-item" style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
-                <img src="{{ asset('aset/img/berita3.png') }}" alt="Berita 3" class="img-content-berita" style="width:100%;height:200px;object-fit:cover;display:block">
+                <img src="{{ asset('assets/img/berita3.png') }}" alt="Berita 3" class="img-content-berita" style="width:100%;height:200px;object-fit:cover;display:block">
                 <div style="padding:1rem">
                     <h4 style="font-size:1rem;color:#1f2937;margin-bottom:0.5rem">Berita RSHP 3</h4>
                     <p style="font-size:0.875rem;color:#6b7280">Pengumuman dan event RSHP terbaru</p>

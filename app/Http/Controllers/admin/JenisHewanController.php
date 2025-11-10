@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JenisHewan;
+use Illuminate\Support\Facades\DB;
 
 class JenisHewanController extends Controller
 {
@@ -24,9 +25,10 @@ class JenisHewanController extends Controller
         return redirect()->route('admin.jenis_hewan.index')
             ->with('success', 'Jenis hewan berhasil ditambahkan.');
     }
+
     public function index()
     {
-        $jenisHewan = JenisHewan::all();
+        $jenisHewan = DB::table('jenis_hewan')->get();
         return view('admin.jenis_hewan.index', compact('jenisHewan'));
     }
 
@@ -55,19 +57,16 @@ class JenisHewanController extends Controller
          ]);
     }
 
-    // Helper untuk membuat data baru
     protected function createJenisHewan(array $data)
     {
         try {
-            return JenisHewan::create([
-                'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan']),
-            ]);
+            //query builder
+            $jenisHewan = DB::table('jenis_hewan')->insert(['nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan'])]);
+            return $jenisHewan;
         } catch (\Exception $e) {
-            throw new \Exception('Gagal menyimpan data jenis hewan: ' . $e->getMessage());
+            throw new \Exception('Gagal menympan data jenis hewan: ' .$e->getMessage());
         }
     }
-
-    // Helper untuk format nama menjadi Title Case
     protected function formatNamaJenisHewan($nama)
     {
         return trim(ucwords(strtolower($nama)));

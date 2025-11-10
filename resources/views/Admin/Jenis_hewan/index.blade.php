@@ -1,48 +1,68 @@
-@extends('layouts.app')
-
-@section('title', 'Jenis Hewan - Admin RSHP')
+@extends('layouts.lte.main')
 
 @section('content')
-
-    <div class="mb-3">
-        <a href="{{ route('admin.jenis_hewan.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Jenis Hewan
-        </a>
-    </div>
-
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <div class="app-content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-6">
+          <h3 class="mb-0">Jenis Hewan</h3>
         </div>
-    @endif
-
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr> 
-                <th>No</th>
-                <th>Nama Jenis Hewan</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($jenisHewan as $index => $hewan)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $hewan->nama_jenis_hewan }}</td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-warning" onclick="window. location='#'">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button type="button" class="btn btn-sm btn-danger" onclick="if(confirm('Yakin ingin menghapus data ini?')) {document.getElementById('delete-form-{{ $hewan->idjenis_hewan }}').submit(); }">
-                            <i class="fas fa-trash"></i> Hapus
-                        </button>
-                        <form id="delete-form-{{ $hewan->idjenis_hewan }}" action="#" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-end">
+            <li class="breadcrumb-item"><a href="#">Master Data</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Jenis Hewan
+            </li>
+          </ol>
+        </div>
+      </div>
+      </div>
+    </div>
+  <div class="app-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-outline">
+            <div class="card-header">
+              <h3 class="card-title">Tabel Data Jenis Hewan</h3>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Nama</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($jenisHewan as $index => $jenis)
+                    <tr>
+                      <td>{{ $index + 1 }}.</td>
+                      <td>{{ $jenis->nama_jenis_hewan }}</td>
+                      <td>
+                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                        <form action="#" method="POST" style="display: inline-block;">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
                         </form>
-                    </td>
-                </tr>
-                @endforeach
-        </tbody>
-    </table>
+                      </td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer clearfix">
+              <ul class="pagination pagination-sm m-0 float-end">
+                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  @endsection

@@ -9,6 +9,9 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
+        // Debug: Log which view is being loaded
+        \Log::info('Loading dashboard view: dashboards.administrator');
+        
         return view('dashboards.administrator');
     }
 }

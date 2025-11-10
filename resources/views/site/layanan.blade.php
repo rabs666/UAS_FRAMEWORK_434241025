@@ -14,7 +14,7 @@
             
             {{-- Card 1: Konsultasi Umum --}}
             <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:transform 0.2s">
-                <img src="{{ asset('aset/img/layanan1.png') }}" alt="Konsultasi Umum" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
+                <img src="{{ asset('assets/img/layanan1.png') }}" alt="Konsultasi Umum" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
                 <div style="padding:1.25rem">
                     <h3 style="color:#1f2937;font-size:1.125rem;margin-bottom:0.5rem;font-weight:600">Konsultasi Umum</h3>
                     <p style="color:#2463d6;font-weight:500;margin-bottom:0.5rem">📅 Senin - Jumat</p>
@@ -25,7 +25,7 @@
 
             {{-- Card 2: Operasi --}}
             <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:transform 0.2s">
-                <img src="{{ asset('aset/img/layanan2.png') }}" alt="Operasi" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
+                <img src="{{ asset('assets/img/layanan2.png') }}" alt="Operasi" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
                 <div style="padding:1.25rem">
                     <h3 style="color:#1f2937;font-size:1.125rem;margin-bottom:0.5rem;font-weight:600">Operasi</h3>
                     <p style="color:#2463d6;font-weight:500;margin-bottom:0.5rem">📅 Selasa, Kamis</p>
@@ -36,7 +36,7 @@
 
             {{-- Card 3: Rawat Inap --}}
             <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:transform 0.2s">
-                <img src="{{ asset('aset/img/layanan3.png') }}" alt="Rawat Inap" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
+                <img src="{{ asset('assets/img/layanan3.png') }}" alt="Rawat Inap" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
                 <div style="padding:1.25rem">
                     <h3 style="color:#1f2937;font-size:1.125rem;margin-bottom:0.5rem;font-weight:600">Rawat Inap</h3>
                     <p style="color:#2463d6;font-weight:500;margin-bottom:0.5rem">📅 24 Jam</p>
@@ -47,7 +47,7 @@
 
             {{-- Card 4: Vaksinasi --}}
             <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:transform 0.2s">
-                <img src="{{ asset('aset/img/layanan4.png') }}" alt="Vaksinasi" style="width:100%;height:200px;object-fit:cover;object-position: center;display:block">
+                <img src="{{ asset('assets/img/layanan4.png') }}" alt="Vaksinasi" style="width:100%;height:200px;object-fit:cover;object-position: center;display:block">
                 <div style="padding:1.25rem">
                     <h3 style="color:#1f2937;font-size:1.125rem;margin-bottom:0.5rem;font-weight:600">Vaksinasi</h3>
                     <p style="color:#2463d6;font-weight:500;margin-bottom:0.5rem">📅 Setiap Hari</p>
@@ -58,7 +58,7 @@
 
             {{-- Card 5: Grooming --}}
             <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:transform 0.2s">
-                <img src="{{ asset('aset/img/layanan5.png') }}" alt="Grooming" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
+                <img src="{{ asset('assets/img/layanan5.png') }}" alt="Grooming" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
                 <div style="padding:1.25rem">
                     <h3 style="color:#1f2937;font-size:1.125rem;margin-bottom:0.5rem;font-weight:600">Grooming</h3>
                     <p style="color:#2463d6;font-weight:500;margin-bottom:0.5rem">📅 Senin - Sabtu</p>
@@ -69,7 +69,7 @@
 
             {{-- Card 6: Pemeriksaan Lab --}}
             <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:transform 0.2s">
-                <img src="{{ asset('aset/img/layanan6.png') }}" alt="Pemeriksaan Lab" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
+                <img src="{{ asset('assets/img/layanan6.png') }}" alt="Pemeriksaan Lab" style="width:100%;height:200px;object-fit:cover;object-position:center;display:block">
                 <div style="padding:1.25rem">
                     <h3 style="color:#1f2937;font-size:1.125rem;margin-bottom:0.5rem;font-weight:600">Pemeriksaan Lab</h3>
                     <p style="color:#2463d6;font-weight:500;margin-bottom:0.5rem">📅 Senin - Jumat</p>
