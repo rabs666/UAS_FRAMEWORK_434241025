@@ -39,20 +39,33 @@ Route::middleware(['auth', 'isAdministrator'])->prefix('admin')->group(function 
     Route::get('/pemilik/{id}/edit', [App\Http\Controllers\admin\PemilikController::class, 'edit'])->name('admin.pemilik.edit');
     Route::put('/pemilik/{id}', [App\Http\Controllers\admin\PemilikController::class, 'update'])->name('admin.pemilik.update');
     Route::delete('/pemilik/{id}', [App\Http\Controllers\admin\PemilikController::class, 'destroy'])->name('admin.pemilik.destroy');
+    // Route Jenis Hewan - CRUD
     Route::get('jenis-hewan/create', [App\Http\Controllers\admin\JenisHewanController::class, 'create'])->name('admin.jenis_hewan.create');
-    Route::post('jenis-hewan/store', [App\Http\Controllers\admin\JenisHewanController::class, 'store'])->name('admin.jenis_hewan.store');
+    Route::post('jenis-hewan', [App\Http\Controllers\admin\JenisHewanController::class, 'store'])->name('admin.jenis_hewan.store');
+    Route::get('jenis-hewan/{id}/edit', [App\Http\Controllers\admin\JenisHewanController::class, 'edit'])->name('admin.jenis_hewan.edit');
+    Route::put('jenis-hewan/{id}', [App\Http\Controllers\admin\JenisHewanController::class, 'update'])->name('admin.jenis_hewan.update');
+    Route::delete('jenis-hewan/{id}', [App\Http\Controllers\admin\JenisHewanController::class, 'destroy'])->name('admin.jenis_hewan.destroy');
     
     // Route Kategori - CRUD
     Route::get('/kategori/create', [App\Http\Controllers\admin\KategoriController::class, 'create'])->name('admin.kategori.create');
     Route::post('/kategori', [App\Http\Controllers\admin\KategoriController::class, 'store'])->name('admin.kategori.store');
+    Route::get('/kategori/{id}/edit', [App\Http\Controllers\admin\KategoriController::class, 'edit'])->name('admin.kategori.edit');
+    Route::put('/kategori/{id}', [App\Http\Controllers\admin\KategoriController::class, 'update'])->name('admin.kategori.update');
+    Route::delete('/kategori/{id}', [App\Http\Controllers\admin\KategoriController::class, 'destroy'])->name('admin.kategori.destroy');
     
     // Route Kategori Klinis - CRUD
     Route::get('/kategori-klinis/create', [App\Http\Controllers\admin\KategoriKlinisController::class, 'create'])->name('admin.kategori_klinis.create');
     Route::post('/kategori-klinis', [App\Http\Controllers\admin\KategoriKlinisController::class, 'store'])->name('admin.kategori_klinis.store');
+    Route::get('/kategori-klinis/{id}/edit', [App\Http\Controllers\admin\KategoriKlinisController::class, 'edit'])->name('admin.kategori_klinis.edit');
+    Route::put('/kategori-klinis/{id}', [App\Http\Controllers\admin\KategoriKlinisController::class, 'update'])->name('admin.kategori_klinis.update');
+    Route::delete('/kategori-klinis/{id}', [App\Http\Controllers\admin\KategoriKlinisController::class, 'destroy'])->name('admin.kategori_klinis.destroy');
     
     // Route Ras Hewan - CRUD
     Route::get('/ras-hewan/create', [App\Http\Controllers\admin\RasHewanController::class, 'create'])->name('admin.ras_hewan.create');
     Route::post('/ras-hewan', [App\Http\Controllers\admin\RasHewanController::class, 'store'])->name('admin.ras_hewan.store');
+    Route::get('/ras-hewan/{id}/edit', [App\Http\Controllers\admin\RasHewanController::class, 'edit'])->name('admin.ras_hewan.edit');
+    Route::put('/ras-hewan/{id}', [App\Http\Controllers\admin\RasHewanController::class, 'update'])->name('admin.ras_hewan.update');
+    Route::delete('/ras-hewan/{id}', [App\Http\Controllers\admin\RasHewanController::class, 'destroy'])->name('admin.ras_hewan.destroy');
     
     // Route Roles - CRUD
     Route::get('/roles/create', [App\Http\Controllers\admin\RoleController::class, 'create'])->name('admin.roles.create');

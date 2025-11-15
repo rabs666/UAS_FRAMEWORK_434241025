@@ -10,8 +10,77 @@ class KategoriController extends Controller
 {
     public function index()
     {
-        $kategori = Kategori::all();
+        // Query Builder: Get all data with pagination
+        $kategori = \DB::table('kategori')
+            ->orderBy('idkategori', 'desc')
+            ->paginate(10);
+        
         return view('admin.kategori.index', compact('kategori'));
+    }
+    
+    public function edit($id)
+    {
+        // Query Builder: Get single record
+        $kategori = \DB::table('kategori')
+            ->where('idkategori', $id)
+            ->first();
+        
+        if (!$kategori) {
+            return redirect()->route('admin.kategori.index')
+                ->with('error', 'Data tidak ditemukan.');
+        }
+        
+        return view('admin.kategori.edit', compact('kategori'));
+    }
+    
+    public function update(Request $request, $id)
+    {
+        // Validasi input
+        $validatedData = $this->validateKategori($request, $id);
+        
+        // Query Builder: Update data
+        try {
+            $updated = \DB::table('kategori')
+                ->where('idkategori', $id)
+                ->update([
+                    'nama_kategori' => $this->formatNamaKategori($validatedData['nama_kategori']),
+                    'updated_at' => now()
+                ]);
+            
+            if ($updated) {
+                return redirect()->route('admin.kategori.index')
+                    ->with('success', 'Kategori berhasil diupdate.');
+            }
+            
+            return redirect()->back()
+                ->with('error', 'Gagal mengupdate data.');
+                
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Gagal mengupdate data: ' . $e->getMessage());
+        }
+    }
+    
+    public function destroy($id)
+    {
+        // Query Builder: Delete data
+        try {
+            $deleted = \DB::table('kategori')
+                ->where('idkategori', $id)
+                ->delete();
+            
+            if ($deleted) {
+                return redirect()->route('admin.kategori.index')
+                    ->with('success', 'Kategori berhasil dihapus.');
+            }
+            
+            return redirect()->back()
+                ->with('error', 'Gagal menghapus data.');
+                
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+        }
     }
 
     public function create()
@@ -61,9 +130,13 @@ class KategoriController extends Controller
     protected function createKategori(array $data)
     {
         try {
-            return Kategori::create([
+            // Query Builder: Insert data
+            \DB::table('kategori')->insert([
                 'nama_kategori' => $this->formatNamaKategori($data['nama_kategori']),
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
+            return true;
         } catch (\Exception $e) {
             throw new \Exception('Gagal menyimpan data kategori: ' . $e->getMessage());
         }
