@@ -13,38 +13,45 @@ class PetController extends Controller
         $pets = DB::table('pet')
             ->leftJoin('ras_hewan', 'pet.idras_hewan', '=', 'ras_hewan.idras_hewan')
             ->leftJoin('pemilik', 'pet.idpemilik', '=', 'pemilik.idpemilik')
-            ->select('pet.*', 'ras_hewan.nama_ras', 'pemilik.nama_pemilik')
-            ->orderBy('pet.idpet', 'desc')
+            ->leftJoin('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->select('pet.*', 'ras_hewan.nama_ras', 'user.nama as nama_pemilik', 'pemilik.no_wa')
+            ->orderBy('pet.id_pet', 'desc')
             ->paginate(10);
         
-        return view('admin.pet.index', compact('pets'));
+        return view('Admin.Pet.index', compact('pets'));
     }
 
     public function create()
     {
-        $rasHewan = DB::table('ras_hewan')->get();
-        $pemilik = DB::table('pemilik')->get();
+        $rasHewan = DB::table('ras_hewan')
+            ->leftJoin('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
+            ->select('ras_hewan.*', 'jenis_hewan.nama_jenis_hewan')
+            ->orderBy('jenis_hewan.nama_jenis_hewan')
+            ->orderBy('ras_hewan.nama_ras')
+            ->get();
+        $pemilik = DB::table('pemilik')
+            ->leftJoin('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->select('pemilik.*', 'user.nama as nama_pemilik')
+            ->get();
         
-        return view('admin.pet.create', compact('rasHewan', 'pemilik'));
+        return view('Admin.Pet.create', compact('rasHewan', 'pemilik'));
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama_pet' => 'required|string|max:100',
+            'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'required|date',
-            'warna_tanda' => 'nullable|string|max:255',
-            'jenis_kelamin' => 'required|in:Jantan,Betina',
             'idras_hewan' => 'required|exists:ras_hewan,idras_hewan',
             'idpemilik' => 'required|exists:pemilik,idpemilik'
         ]);
 
         try {
             DB::table('pet')->insert([
-                'nama' => ucwords(strtolower($validated['nama'])),
-                'tanggal_lahir' => $validated['tanggal_lahir'],
-                'warna_tanda' => $validated['warna_tanda'],
+                'nama_pet' => ucwords(strtolower($validated['nama_pet'])),
                 'jenis_kelamin' => $validated['jenis_kelamin'],
+                'tanggal_lahir' => $validated['tanggal_lahir'],
                 'idras_hewan' => $validated['idras_hewan'],
                 'idpemilik' => $validated['idpemilik'],
                 'created_at' => now(),
@@ -62,38 +69,44 @@ class PetController extends Controller
 
     public function edit($id)
     {
-        $pet = DB::table('pet')->where('idpet', $id)->first();
+        $pet = DB::table('pet')->where('id_pet', $id)->first();
         
         if (!$pet) {
             return redirect()->route('admin.pet.index')
                 ->with('error', 'Data tidak ditemukan.');
         }
         
-        $rasHewan = DB::table('ras_hewan')->get();
-        $pemilik = DB::table('pemilik')->get();
+        $rasHewan = DB::table('ras_hewan')
+            ->leftJoin('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
+            ->select('ras_hewan.*', 'jenis_hewan.nama_jenis_hewan')
+            ->orderBy('jenis_hewan.nama_jenis_hewan')
+            ->orderBy('ras_hewan.nama_ras')
+            ->get();
+        $pemilik = DB::table('pemilik')
+            ->leftJoin('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->select('pemilik.*', 'user.nama as nama_pemilik')
+            ->get();
         
-        return view('admin.pet.edit', compact('pet', 'rasHewan', 'pemilik'));
+        return view('Admin.Pet.edit', compact('pet', 'rasHewan', 'pemilik'));
     }
 
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama_pet' => 'required|string|max:100',
+            'jenis_kelamin' => 'required|in:L,P',
             'tanggal_lahir' => 'required|date',
-            'warna_tanda' => 'nullable|string|max:255',
-            'jenis_kelamin' => 'required|in:Jantan,Betina',
             'idras_hewan' => 'required|exists:ras_hewan,idras_hewan',
             'idpemilik' => 'required|exists:pemilik,idpemilik'
         ]);
 
         try {
             $updated = DB::table('pet')
-                ->where('idpet', $id)
+                ->where('id_pet', $id)
                 ->update([
-                    'nama' => ucwords(strtolower($validated['nama'])),
-                    'tanggal_lahir' => $validated['tanggal_lahir'],
-                    'warna_tanda' => $validated['warna_tanda'],
+                    'nama_pet' => ucwords(strtolower($validated['nama_pet'])),
                     'jenis_kelamin' => $validated['jenis_kelamin'],
+                    'tanggal_lahir' => $validated['tanggal_lahir'],
                     'idras_hewan' => $validated['idras_hewan'],
                     'idpemilik' => $validated['idpemilik'],
                     'updated_at' => now()
@@ -116,7 +129,7 @@ class PetController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('pet')->where('idpet', $id)->delete();
+            $deleted = DB::table('pet')->where('id_pet', $id)->delete();
 
             if ($deleted) {
                 return redirect()->route('admin.pet.index')

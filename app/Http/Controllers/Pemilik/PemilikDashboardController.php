@@ -15,7 +15,7 @@ class PemilikDashboardController extends Controller
         $pemilik = PemilikModel::where('iduser', auth()->id())->first();
         
         if (!$pemilik) {
-            return view('dashboards.pemilik')->with('message', 'Anda belum terdaftar sebagai pemilik pet.');
+            return view('Pemilik.dashboard')->with('message', 'Anda belum terdaftar sebagai pemilik pet.');
         }
         
         // Ambil HANYA pet milik user yang login
@@ -23,6 +23,6 @@ class PemilikDashboardController extends Controller
             ->with(['rasHewan.jenisHewan', 'rekamMedis'])
             ->get();
         
-        return view('dashboards.pemilik', compact('pets', 'pemilik'));
+        return view('Pemilik.dashboard', compact('pets', 'pemilik'));
     }
 }

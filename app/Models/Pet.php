@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Pet extends Model
 {
     protected $table = 'pet';
-    protected $primaryKey = 'idpet';
-    protected $fillable = ['nama', 'tanggal_lahir', 'warna_tanda', 'jenis_kelamin', 'idras_hewan', 'idpemilik'];
+    protected $primaryKey = 'id_pet';
+    protected $fillable = ['nama_pet', 'jenis_kelamin', 'tanggal_lahir', 'idras_hewan', 'idpemilik'];
 
     // Relationship: Many to One (inverse) - Pet to RasHewan
     public function rasHewan()
@@ -22,9 +22,15 @@ class Pet extends Model
         return $this->belongsTo(Pemilik::class, 'idpemilik', 'idpemilik');
     }
 
-    // Relationship: One to Many - Pet many RekamMedis
+    // Relationship: One to Many - Pet has many RekamMedis
     public function rekamMedis()
     {
-        return $this->hasMany(Rekam_Medis::class, 'idpet', 'idpet');
+        return $this->hasMany(Rekam_Medis::class, 'id_pet', 'id_pet');
+    }
+
+    // Relationship: One to Many - Pet has many TemuDokter
+    public function temuDokter()
+    {
+        return $this->hasMany(TemuDokter::class, 'id_pet', 'id_pet');
     }
 }

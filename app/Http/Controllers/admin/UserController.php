@@ -23,7 +23,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = \App\Models\Role::all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -35,12 +36,20 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:user,email',
             'password' => 'required|min:6|confirmed',
+            'role' => 'required|exists:role,idrole',
         ]);
 
-        User::create([
-            'name' => $validated['name'],
+        $user = User::create([
+            'nama' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+        ]);
+
+        // Create role_user entry
+        \App\Models\Role_User::create([
+            'iduser' => $user->iduser,
+            'idrole' => $validated['role'],
+            'status' => 1, // Active
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan!');
@@ -59,7 +68,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = \App\Models\Role::all();
+        $currentRole = $user->roleUsers()->where('status', 1)->first();
+        return view('admin.users.edit', compact('user', 'roles', 'currentRole'));
     }
 
     /**
@@ -71,9 +82,10 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:user,email,' . $user->iduser . ',iduser',
             'password' => 'nullable|min:6|confirmed',
+            'role' => 'required|exists:role,idrole',
         ]);
 
-        $user->name = $validated['name'];
+        $user->nama = $validated['name'];
         $user->email = $validated['email'];
         
         if ($request->filled('password')) {
@@ -81,6 +93,24 @@ class UserController extends Controller
         }
         
         $user->save();
+
+        // Update role - deactivate old role and create new one
+        \App\Models\Role_User::where('iduser', $user->iduser)->update(['status' => 0]);
+        
+        // Check if role already exists for this user
+        $existingRole = \App\Models\Role_User::where('iduser', $user->iduser)
+            ->where('idrole', $validated['role'])
+            ->first();
+            
+        if ($existingRole) {
+            $existingRole->update(['status' => 1]);
+        } else {
+            \App\Models\Role_User::create([
+                'iduser' => $user->iduser,
+                'idrole' => $validated['role'],
+                'status' => 1,
+            ]);
+        }
 
         return redirect()->route('admin.users.index')->with('success', 'User berhasil diupdate!');
     }

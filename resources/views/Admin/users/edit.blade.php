@@ -6,7 +6,7 @@
 
     <div class="card mt-4">
         <div class="card-body">
-            <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
+            <form action="{{ route('admin.users.update', $user->iduser) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -44,10 +44,29 @@
                            id="password_confirmation" name="password_confirmation">
                 </div>
 
+                <div class="mb-3">
+                    <label for="role" class="form-label">Role</label>
+                    <select class="form-select @error('role') is-invalid @enderror" 
+                            id="role" name="role" required>
+                        <option value="">-- Pilih Role --</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->idrole }}" 
+                                {{ old('role', $currentRole?->idrole) == $role->idrole ? 'selected' : '' }}>
+                                {{ $role->nama_role }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('role')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                @if($user->created_at)
                 <div class="alert alert-info">
                     <i class="bi bi-info-circle"></i> 
                     User ini dibuat pada: <strong>{{ $user->created_at->format('d/m/Y H:i') }}</strong>
                 </div>
+                @endif
 
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-primary">

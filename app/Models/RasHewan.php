@@ -9,6 +9,7 @@ class RasHewan extends Model
     protected $table = 'ras_hewan';
     protected $primaryKey = 'idras_hewan';
     protected $fillable = ['nama_ras', 'idjenis_hewan'];
+    public $timestamps = false; // Disable timestamps
 
     // Relationship: Many to One (inverse) - RasHewan belongs to JenisHewan
     public function jenisHewan()

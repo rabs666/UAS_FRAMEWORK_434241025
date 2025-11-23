@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Detail_Rekaman_Medis extends Model
 {
-    protected $table = 'detail_rekam_medis';
-    protected $primaryKey = 'iddetail_rekam_medis';
-    protected $fillable = ['detail', 'idrekam_medis', 'idkode_tindakan_terapi'];
-    public $timestamps = false;
+    protected $table = 'detail_rekaman_medis';
+    protected $primaryKey = 'iddetail_rekaman_medis';
+    protected $fillable = ['idrekam_medis', 'idkode_tindakan_terapi', 'hasil', 'catatan'];
 
     // Relationship: Many to One (inverse) - DetailRekamMedis belongs to RekamMedis
     public function rekamMedis()

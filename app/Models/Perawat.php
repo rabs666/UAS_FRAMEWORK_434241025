@@ -20,6 +20,6 @@ class Perawat extends Model
     // Relasi ke User
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user', 'id');
+        return $this->belongsTo(User::class, 'id_user', 'iduser');
     }
 }

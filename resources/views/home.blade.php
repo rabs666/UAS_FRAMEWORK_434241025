@@ -52,7 +52,7 @@
                             </a>
                         </div>
                         <div class="col-md-4 mb-2">
-                            <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-secondary btn-block w-100">
+                            <a href="{{ route('admin.role.index') }}" class="btn btn-outline-secondary btn-block w-100">
                                 <i class="bi bi-shield-lock"></i> Roles
                             </a>
                         </div>

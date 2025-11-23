@@ -28,8 +28,8 @@
                 <select name="iduser" required style="width:100%;padding:0.75rem;border:1px solid #d1d5db;border-radius:6px;font-size:1rem">
                     <option value="">-- Pilih User --</option>
                     @foreach($users as $user)
-                        <option value="{{ $user->id }}" {{ (old('iduser', $pemilik->iduser) == $user->id) ? 'selected' : '' }}>
-                            {{ $user->name }} ({{ $user->email }})
+                        <option value="{{ $user->iduser }}" {{ (old('iduser', $pemilik->iduser) == $user->iduser) ? 'selected' : '' }}>
+                            {{ $user->nama }} ({{ $user->email }})
                         </option>
                     @endforeach
                 </select>

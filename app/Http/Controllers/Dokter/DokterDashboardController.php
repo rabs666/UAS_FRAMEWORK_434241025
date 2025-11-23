@@ -23,6 +23,6 @@ class DokterDashboardController extends Controller
             ->take(15)
             ->get();
         
-        return view('dashboards.dokter', compact('rekamMedis', 'pets'));
+        return view('Dokter.dashboard', compact('rekamMedis', 'pets'));
     }
 }

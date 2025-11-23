@@ -22,10 +22,22 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nama',
         'email',
         'password',
     ];
+
+    // Accessor untuk mapping kolom nama ke name
+    public function getNameAttribute()
+    {
+        return $this->attributes['nama'] ?? null;
+    }
+
+    // Mutator untuk mapping kolom name ke nama
+    public function setNameAttribute($value)
+    {
+        $this->attributes['nama'] = $value;
+    }
 
     /**
      * The attributes that should be hidden for serialization.

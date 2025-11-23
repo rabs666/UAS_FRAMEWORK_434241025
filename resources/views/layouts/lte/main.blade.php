@@ -1,10 +1,25 @@
 <!doctype html>
 <html lang="en">
   @include('layouts.lte.head')
-  <body class="layout-fixed">
+  <body class="layout-fixed sidebar-expand-lg">
     <div class="app-wrapper">
       @include('layouts.lte.navbar')
-      @include('layouts.lte.sidebar')
+      @php
+        $role = session('user_role', 'guest');
+      @endphp
+      @if($role === 'Administrator')
+        @include('layouts.lte.sidebar-admin')
+      @elseif($role === 'Dokter')
+        @include('layouts.lte.sidebar-dokter')
+      @elseif($role === 'Perawat')
+        @include('layouts.lte.sidebar-perawat')
+      @elseif($role === 'Resepsionis')
+        @include('layouts.lte.sidebar-resepsionis')
+      @elseif($role === 'Pemilik')
+        @include('layouts.lte.sidebar-pemilik')
+      @else
+        @include('layouts.lte.sidebar')
+      @endif
       <main class="app-main">
         @yield('content')
       </main>
@@ -37,27 +52,19 @@
           });
         }
         
-        // Handle menu treeview toggle
-        document.querySelectorAll('[data-lte-toggle="treeview"] .nav-item > .nav-link').forEach(function(element) {
-          element.addEventListener('click', function(e) {
-            const parentItem = this.closest('.nav-item');
-            const subMenu = parentItem.querySelector('.nav-treeview');
-            
-            if (subMenu) {
-              e.preventDefault();
-              
-              // Toggle menu-open class
-              parentItem.classList.toggle('menu-open');
-              
-              // Toggle submenu visibility
-              if (parentItem.classList.contains('menu-open')) {
-                subMenu.style.display = 'block';
-              } else {
-                subMenu.style.display = 'none';
-              }
-            }
+        // Handle Bootstrap collapse menu
+        const masterDataToggle = document.querySelector('[href="#masterDataMenu"]');
+        const masterDataMenu = document.getElementById('masterDataMenu');
+        
+        if (masterDataToggle && masterDataMenu) {
+          masterDataMenu.addEventListener('show.bs.collapse', function() {
+            masterDataToggle.closest('.nav-item').classList.add('menu-open');
           });
-        });
+          
+          masterDataMenu.addEventListener('hide.bs.collapse', function() {
+            masterDataToggle.closest('.nav-item').classList.remove('menu-open');
+          });
+        }
       });
     </script>
     <script

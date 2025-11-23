@@ -26,6 +26,6 @@ class PerawatDashboardController extends Controller
             ->take(20)
             ->get();
         
-        return view('dashboards.perawat', compact('petsInCare', 'treatments'));
+        return view('Perawat.dashboard', compact('petsInCare', 'treatments'));
     }
 }

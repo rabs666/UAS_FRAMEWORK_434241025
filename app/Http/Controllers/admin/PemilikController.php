@@ -17,19 +17,30 @@ class PemilikController extends Controller
 
     public function create()
     {
-        $users = User::all();
+        // Get only users with Pemilik role (idrole = 5)
+        $users = User::whereHas('roleUsers', function($query) {
+            $query->where('idrole', 5)->where('status', 1);
+        })->get();
         return view('admin.pemilik.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'iduser' => 'required|exists:users,id',
+            'iduser' => 'required|exists:user,iduser',
             'alamat' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
         ]);
 
-        Pemilik::create($request->all());
+        // Generate idpemilik manually (get max + 1)
+        $maxId = Pemilik::max('idpemilik') ?? 0;
+        
+        Pemilik::create([
+            'idpemilik' => $maxId + 1,
+            'iduser' => $request->iduser,
+            'alamat' => $request->alamat,
+            'no_wa' => $request->no_wa,
+        ]);
 
         return redirect()->route('admin.pemilik.index')->with('success', 'Data pemilik berhasil ditambahkan!');
     }
@@ -37,14 +48,17 @@ class PemilikController extends Controller
     public function edit($id)
     {
         $pemilik = Pemilik::findOrFail($id);
-        $users = User::all();
+        // Get only users with Pemilik role (idrole = 5)
+        $users = User::whereHas('roleUsers', function($query) {
+            $query->where('idrole', 5)->where('status', 1);
+        })->get();
         return view('admin.pemilik.edit', compact('pemilik', 'users'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            'iduser' => 'required|exists:users,id',
+            'iduser' => 'required|exists:user,iduser',
             'alamat' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
         ]);

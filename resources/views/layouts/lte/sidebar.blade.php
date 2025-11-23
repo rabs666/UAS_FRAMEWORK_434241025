@@ -33,8 +33,8 @@
                 </li>
                 
                 {{-- Master Data --}}
-                <li class="nav-item {{ request()->routeIs('admin.jenis_hewan.*', 'admin.ras_hewan.*', 'admin.kategori.*', 'admin.kategori_klinis.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('admin.jenis_hewan.*', 'admin.ras_hewan.*', 'admin.kategori.*', 'admin.kategori_klinis.*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('admin.jenis_hewan.*', 'admin.ras_hewan.*', 'admin.kategori.*', 'admin.kategori_klinis.*', 'admin.role.*', 'admin.pemilik.*', 'admin.pet.*', 'admin.kode_tindakan.*', 'admin.users.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('admin.jenis_hewan.*', 'admin.ras_hewan.*', 'admin.kategori.*', 'admin.kategori_klinis.*', 'admin.role.*', 'admin.pemilik.*', 'admin.pet.*', 'admin.kode_tindakan.*', 'admin.users.*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-folder"></i>
                         <p>
                             Master Data
@@ -66,14 +66,55 @@
                                 <p>Kategori Klinis</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.role.index') }}" class="nav-link {{ request()->routeIs('admin.role.*') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Role</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.pemilik.index') }}" class="nav-link {{ request()->routeIs('admin.pemilik.*') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Pemilik</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.pet.index') }}" class="nav-link {{ request()->routeIs('admin.pet.*') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Pet</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.kode_tindakan.index') }}" class="nav-link {{ request()->routeIs('admin.kode_tindakan.*') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Kode Tindakan Terapi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>User</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 
+                {{-- Transaksi Header --}}
+                <li class="nav-header">TRANSAKSI</li>
+                
                 {{-- Rekam Medis --}}
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-hospital"></i>
+                    <a href="{{ route('admin.rekam_medis.index') }}" class="nav-link {{ request()->routeIs('admin.rekam_medis.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-file-medical"></i>
                         <p>Rekam Medis</p>
+                    </a>
+                </li>
+                
+                {{-- Temu Dokter --}}
+                <li class="nav-item">
+                    <a href="{{ route('admin.temu_dokter.index') }}" class="nav-link {{ request()->routeIs('admin.temu_dokter.*') ? 'active' : '' }}">
+                        <i class="nav-icon bi bi-calendar-check"></i>
+                        <p>Temu Dokter</p>
                     </a>
                 </li>
                 
