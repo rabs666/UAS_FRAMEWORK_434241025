@@ -85,7 +85,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.kode_tindakan.index') }}" class="nav-link {{ request()->routeIs('admin.kode_tindakan.*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.kode_tindakan_terapi.index') }}" class="nav-link {{ request()->routeIs('admin.kode_tindakan_terapi.*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Kode Tindakan Terapi</p>
                             </a>

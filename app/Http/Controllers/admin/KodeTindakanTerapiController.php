@@ -14,6 +14,7 @@ class KodeTindakanTerapiController extends Controller
             ->leftJoin('kategori', 'kode_tindakan_terapi.idkategori', '=', 'kategori.idkategori')
             ->leftJoin('kategori_klinis', 'kode_tindakan_terapi.idkategori_klinis', '=', 'kategori_klinis.idkategori_klinis')
             ->select('kode_tindakan_terapi.*', 'kategori.nama_kategori', 'kategori_klinis.nama_kategori_klinis')
+            ->whereNull('kode_tindakan_terapi.deleted_at')
             ->orderBy('kode_tindakan_terapi.idkode_tindakan_terapi', 'desc')
             ->paginate(10);
         
@@ -112,7 +113,10 @@ class KodeTindakanTerapiController extends Controller
         try {
             $deleted = DB::table('kode_tindakan_terapi')
                 ->where('idkode_tindakan_terapi', $id)
-                ->delete();
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('admin.kode_tindakan_terapi.index')

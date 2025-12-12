@@ -13,6 +13,7 @@ class PemilikController extends Controller
         $pemilik = DB::table('pemilik')
             ->leftJoin('user', 'pemilik.iduser', '=', 'user.iduser')
             ->select('pemilik.*', 'user.nama as nama_pemilik')
+            ->whereNull('pemilik.deleted_at')
             ->orderBy('pemilik.idpemilik', 'desc')
             ->paginate(10);
 
@@ -94,7 +95,12 @@ class PemilikController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('pemilik')->where('idpemilik', $id)->delete();
+            $deleted = DB::table('pemilik')
+                ->where('idpemilik', $id)
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('resepsionis.pemilik.index')

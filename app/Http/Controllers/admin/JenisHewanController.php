@@ -30,6 +30,7 @@ class JenisHewanController extends Controller
     {
         // Query Builder: Get all data with pagination
         $jenisHewan = DB::table('jenis_hewan')
+            ->whereNull('deleted_at')
             ->orderBy('idjenis_hewan', 'desc')
             ->paginate(10);
         
@@ -81,11 +82,14 @@ class JenisHewanController extends Controller
     
     public function destroy($id)
     {
-        // Query Builder: Delete data
+        // Query Builder: Soft delete data
         try {
             $deleted = DB::table('jenis_hewan')
                 ->where('idjenis_hewan', $id)
-                ->delete();
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
             
             if ($deleted) {
                 return redirect()->route('admin.jenis_hewan.index')

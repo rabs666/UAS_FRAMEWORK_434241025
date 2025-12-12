@@ -15,6 +15,7 @@ class PetController extends Controller
             ->leftJoin('pemilik', 'pet.idpemilik', '=', 'pemilik.idpemilik')
             ->leftJoin('user', 'pemilik.iduser', '=', 'user.iduser')
             ->select('pet.*', 'ras_hewan.nama_ras', 'user.nama as nama_pemilik', 'pemilik.no_wa')
+            ->whereNull('pet.deleted_at')
             ->orderBy('pet.id_pet', 'desc')
             ->paginate(10);
         
@@ -129,7 +130,12 @@ class PetController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('pet')->where('id_pet', $id)->delete();
+            $deleted = DB::table('pet')
+                ->where('id_pet', $id)
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('admin.pet.index')

@@ -120,6 +120,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // Hard delete untuk user (tidak menggunakan soft delete)
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'User berhasil dihapus!');
     }

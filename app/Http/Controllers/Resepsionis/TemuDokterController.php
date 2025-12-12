@@ -19,6 +19,7 @@ class TemuDokterController extends Controller
                 'pet.nama_pet',
                 'users.name as nama_dokter'
             )
+            ->whereNull('temu_dokter.deleted_at')
             ->orderBy('temu_dokter.tanggal_temu', 'desc')
             ->paginate(10);
 
@@ -127,7 +128,12 @@ class TemuDokterController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('temu_dokter')->where('id_temu_dokter', $id)->delete();
+            $deleted = DB::table('temu_dokter')
+                ->where('id_temu_dokter', $id)
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('resepsionis.temu_dokter.index')

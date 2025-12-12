@@ -15,6 +15,7 @@ class RasHewanController extends Controller
         $rasHewan = \DB::table('ras_hewan')
             ->join('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
             ->select('ras_hewan.*', 'jenis_hewan.nama_jenis_hewan')
+            ->whereNull('ras_hewan.deleted_at')
             ->orderBy('ras_hewan.idras_hewan', 'desc')
             ->paginate(10);
         
@@ -70,11 +71,14 @@ class RasHewanController extends Controller
     
     public function destroy($id)
     {
-        // Query Builder: Delete data
+        // Query Builder: Soft delete data
         try {
             $deleted = \DB::table('ras_hewan')
                 ->where('idras_hewan', $id)
-                ->delete();
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
             
             if ($deleted) {
                 return redirect()->route('admin.ras_hewan.index')

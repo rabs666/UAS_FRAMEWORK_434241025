@@ -12,6 +12,7 @@ class KategoriController extends Controller
     {
         // Query Builder: Get all data with pagination
         $kategori = \DB::table('kategori')
+            ->whereNull('deleted_at')
             ->orderBy('idkategori', 'desc')
             ->paginate(10);
         
@@ -63,11 +64,14 @@ class KategoriController extends Controller
     
     public function destroy($id)
     {
-        // Query Builder: Delete data
+        // Query Builder: Soft delete data
         try {
             $deleted = \DB::table('kategori')
                 ->where('idkategori', $id)
-                ->delete();
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
             
             if ($deleted) {
                 return redirect()->route('admin.kategori.index')

@@ -23,6 +23,7 @@ class RekamMedisController extends Controller
                 'user_dokter.name as nama_dokter',
                 'user_perawat.name as nama_perawat'
             )
+            ->whereNull('rekam_medis.deleted_at')
             ->orderBy('rekam_medis.tanggal', 'desc')
             ->paginate(10);
 
@@ -139,7 +140,12 @@ class RekamMedisController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('rekam_medis')->where('idrekam_medis', $id)->delete();
+            $deleted = DB::table('rekam_medis')
+                ->where('idrekam_medis', $id)
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('perawat.rekam_medis.index')

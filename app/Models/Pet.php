@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pet extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'pet';
     protected $primaryKey = 'id_pet';
-    protected $fillable = ['nama_pet', 'jenis_kelamin', 'tanggal_lahir', 'idras_hewan', 'idpemilik'];
+    protected $fillable = ['nama_pet', 'jenis_kelamin', 'tanggal_lahir', 'idras_hewan', 'idpemilik', 'deleted_by'];
+    protected $dates = ['deleted_at'];
 
     // Relationship: Many to One (inverse) - Pet to RasHewan
     public function rasHewan()

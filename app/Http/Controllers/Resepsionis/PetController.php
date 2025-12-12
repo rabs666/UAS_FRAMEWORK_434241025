@@ -15,6 +15,7 @@ class PetController extends Controller
             ->leftJoin('jenis_hewan', 'ras_hewan.idjenis_hewan', '=', 'jenis_hewan.idjenis_hewan')
             ->leftJoin('pemilik', 'pet.idpemilik', '=', 'pemilik.idpemilik')
             ->leftJoin('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->whereNull('pet.deleted_at')
             ->select('pet.*', 'jenis_hewan.nama_jenis_hewan', 'ras_hewan.nama_ras', 'user.nama as nama_pemilik', 'pemilik.no_wa')
             ->orderBy('pet.id_pet', 'desc')
             ->paginate(10);
@@ -124,7 +125,13 @@ class PetController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('pet')->where('id_pet', $id)->delete();
+            // Soft delete - update deleted_at and deleted_by
+            $deleted = DB::table('pet')
+                ->where('id_pet', $id)
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('resepsionis.pet.index')

@@ -11,7 +11,11 @@ class PemilikController extends Controller
 {
     public function index()
     {
-        $pemilik = Pemilik::with('user')->get();
+        $pemilik = \DB::table('pemilik')
+            ->leftJoin('user', 'pemilik.iduser', '=', 'user.iduser')
+            ->select('pemilik.*', 'user.nama as nama_user', 'user.email')
+            ->whereNull('pemilik.deleted_at')
+            ->get();
         return view('admin.pemilik.index', compact('pemilik'));
     }
 
@@ -71,8 +75,13 @@ class PemilikController extends Controller
 
     public function destroy($id)
     {
-        $pemilik = Pemilik::findOrFail($id);
-        $pemilik->delete();
+        // Soft delete manual untuk model tanpa timestamps
+        \DB::table('pemilik')
+            ->where('idpemilik', $id)
+            ->update([
+                'deleted_at' => now(),
+                'deleted_by' => auth()->id(),
+            ]);
 
         return redirect()->route('admin.pemilik.index')->with('success', 'Data pemilik berhasil dihapus!');
     }

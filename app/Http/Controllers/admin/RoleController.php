@@ -11,6 +11,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = DB::table('role')
+            ->whereNull('deleted_at')
             ->orderBy('idrole', 'desc')
             ->paginate(10);
         
@@ -87,7 +88,12 @@ class RoleController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('role')->where('idrole', $id)->delete();
+            $deleted = DB::table('role')
+                ->where('idrole', $id)
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('admin.role.index')

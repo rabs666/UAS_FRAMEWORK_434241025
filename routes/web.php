@@ -31,7 +31,14 @@ Route::middleware(['auth', 'isAdministrator'])->prefix('admin')->group(function 
     Route::get('/kategori-klinis', [App\Http\Controllers\admin\KategoriKlinisController::class, 'index'])->name('admin.kategori_klinis.index');
     Route::get('/ras-hewan', [App\Http\Controllers\admin\RasHewanController::class, 'index'])->name('admin.ras_hewan.index');
     Route::get('/roles', [App\Http\Controllers\admin\RoleController::class, 'index'])->name('admin.role.index');
-    Route::get('/kode-tindakan-terapi', [App\Http\Controllers\admin\KodeTindakanTerapiController::class, 'index'])->name('admin.kode_tindakan.index');
+    
+    // Route Kode Tindakan Terapi - CRUD
+    Route::get('/kode-tindakan-terapi', [App\Http\Controllers\admin\KodeTindakanTerapiController::class, 'index'])->name('admin.kode_tindakan_terapi.index');
+    Route::get('/kode-tindakan-terapi/create', [App\Http\Controllers\admin\KodeTindakanTerapiController::class, 'create'])->name('admin.kode_tindakan_terapi.create');
+    Route::post('/kode-tindakan-terapi', [App\Http\Controllers\admin\KodeTindakanTerapiController::class, 'store'])->name('admin.kode_tindakan_terapi.store');
+    Route::get('/kode-tindakan-terapi/{id}/edit', [App\Http\Controllers\admin\KodeTindakanTerapiController::class, 'edit'])->name('admin.kode_tindakan_terapi.edit');
+    Route::put('/kode-tindakan-terapi/{id}', [App\Http\Controllers\admin\KodeTindakanTerapiController::class, 'update'])->name('admin.kode_tindakan_terapi.update');
+    Route::delete('/kode-tindakan-terapi/{id}', [App\Http\Controllers\admin\KodeTindakanTerapiController::class, 'destroy'])->name('admin.kode_tindakan_terapi.destroy');
     
     // Route Pemilik - CRUD
     Route::get('/pemilik', [App\Http\Controllers\admin\PemilikController::class, 'index'])->name('admin.pemilik.index');

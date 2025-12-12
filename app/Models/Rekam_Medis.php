@@ -3,12 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Rekam_Medis extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'rekam_medis';
     protected $primaryKey = 'idrekam_medis';
-    protected $fillable = ['id_pet', 'tanggal', 'keluhan', 'diagnosa', 'id_perawat', 'id_dokter'];
+    protected $fillable = ['id_pet', 'tanggal', 'keluhan', 'diagnosa', 'id_perawat', 'id_dokter', 'deleted_by'];
+    protected $dates = ['deleted_at'];
 
     // Relationship: Many to One (inverse) - RekamMedis belongs to Pet
     public function pet()

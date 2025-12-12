@@ -22,6 +22,7 @@ class DetailRekamMedisController extends Controller
                 'kode_tindakan_terapi.kode',
                 'kode_tindakan_terapi.deskripsi_tindakan_terapi'
             )
+            ->whereNull('detail_rekaman_medis.deleted_at')
             ->orderBy('rekam_medis.tanggal', 'desc')
             ->paginate(10);
 
@@ -122,7 +123,12 @@ class DetailRekamMedisController extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = DB::table('detail_rekaman_medis')->where('iddetail_rekaman_medis', $id)->delete();
+            $deleted = DB::table('detail_rekaman_medis')
+                ->where('iddetail_rekaman_medis', $id)
+                ->update([
+                    'deleted_at' => now(),
+                    'deleted_by' => auth()->id(),
+                ]);
 
             if ($deleted) {
                 return redirect()->route('dokter.detail_rekam_medis.index')
